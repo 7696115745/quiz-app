@@ -1,0 +1,30 @@
+{
+  "quiz": [
+    {
+      "id": "39297285-1a53-4ae4-8bec-32b39eda3408",
+      "categories": "next js",
+      "questions": [
+        {
+          "id": "b5df4771-1891-49d3-9109-7d358aec26a3",
+          "Questions": "Which command is used to create a new Next.js project",
+          "option-1": "npm create next-app",
+          "option-2": "npx create-next-app",
+          "option-3": "npm start next-app",
+          "option-4": "next new project",
+          "marks": "10",
+          "answer": "npx create-next-app"
+        },
+        {
+          "id": "1f5b1444-77fa-407f-a632-44024ae85684",
+          "Questions": "How can you enable server-side rendering for a page in Next.js",
+          "option-1": "By using getStaticProps",
+          "option-2": " By using getServerSideProps",
+          "option-3": "By using getInitialProps",
+          "option-4": "By using getClientSideProps",
+          "marks": "10",
+          "answer": "By using getServerSideProps"
+        }
+      ]
+    }
+  ]
+}
