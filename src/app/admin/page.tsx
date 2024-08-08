@@ -5,7 +5,7 @@ import { GiHamburgerMenu } from "react-icons/gi";
 import axios from "axios";
 import Cookies from "js-cookie";
 import { v4 as uuidv4 } from "uuid"; // Import uuid for unique IDs
-import AdminLogOut from "../adminlogout/page";
+import AdminLogOut from "../adminlogout/AdminLogout";
 
 export default function Page() {
   const [showForm, setShowForm] = useState<boolean>(false);

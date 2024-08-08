@@ -2,7 +2,7 @@
 import { useState, ChangeEvent, FormEvent, useEffect } from 'react';
 import axios from 'axios';
 import Cookies from 'js-cookie';
-import AdminLogOut from "../adminlogout/page"
+import AdminLogOut from "../adminlogout/AdminLogout"
 import { GiHamburgerMenu } from "react-icons/gi";
 import {FaTimes } from "react-icons/fa";
 
