@@ -11,6 +11,9 @@ export function middleware(req: NextRequest) {
     pathname.startsWith('/public/') ||
     pathname.match(/\.(png|jpg|jpeg|gif|svg|ico)$/) ||
     pathname === '/login' || // Allow access to the login page
+    pathname ==="/admin" ||
+    pathname === "/"||
+    pathname === "/adminsetquestions" ||
     pathname.startsWith('/api/auth/') // Allow access to API routes
   ) {
     return NextResponse.next();
@@ -24,6 +27,13 @@ export function middleware(req: NextRequest) {
   if (!AdminToken && !UserToken) {
     // Redirect to login page if no cookies are found
     return NextResponse.redirect(new URL("/login", req.url));
+  }
+  else if(AdminToken){
+    return NextResponse.redirect(new URL("/admin",req.url));
+  
+  }
+  else if(UserToken){
+    return NextResponse.redirect(new URL("/",req.url))
   }
 
   // Allow the request if cookies are present
