@@ -1,7 +1,6 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(req: NextRequest) {
-  const cookies = req.cookies;
   const { pathname } = req.nextUrl;
 
   // Skip middleware for static files, Next.js internal paths, and the login page
@@ -11,31 +10,20 @@ export function middleware(req: NextRequest) {
     pathname.startsWith('/public/') ||
     pathname.match(/\.(png|jpg|jpeg|gif|svg|ico)$/) ||
     pathname === '/login' || // Allow access to the login page
-    pathname ==="/admin" ||
-    pathname === "/"||
-    pathname === "/adminsetquestions" ||
     pathname.startsWith('/api/auth/') // Allow access to API routes
   ) {
     return NextResponse.next();
   }
 
   // Extract tokens from cookies
-  const AdminToken = cookies.get("email");
-  const UserToken = cookies.get("authjs.session-token");
+  const adminToken = req.cookies.get("email");
+  const userToken = req.cookies.get("authjs.session-token");
 
-  // Check if any cookies are present
-  if (!AdminToken && !UserToken) {
-    // Redirect to login page if no cookies are found
+  // Redirect to login if neither token is found
+  if (!adminToken && !userToken) {
     return NextResponse.redirect(new URL("/login", req.url));
   }
-  else if(AdminToken){
-    return NextResponse.redirect(new URL("/admin",req.url));
-  
-  }
-  else if(UserToken){
-    return NextResponse.redirect(new URL("/",req.url))
-  }
 
-  // Allow the request if cookies are present
+  // Allow access to all routes if any token is present
   return NextResponse.next();
 }
