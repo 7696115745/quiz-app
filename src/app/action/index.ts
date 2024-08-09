@@ -2,8 +2,10 @@ import { signIn, signOut } from "next-auth/react";
 
 export async function doSocialLogin(formData: FormData) {
     const action = formData.get('action') as string;
+    const callbackUrl = process.env.NEXT_PUBLIC_APP_URL ? `${process.env.NEXT_PUBLIC_APP_URL}/user` : "/user";
+
     if (action) {
-        await signIn(action, { callbackUrl: "/user" });
+        await signIn(action, { callbackUrl});
         
     } else {
         throw new Error("No action specified for social login");
