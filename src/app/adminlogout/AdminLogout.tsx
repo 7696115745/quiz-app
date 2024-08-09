@@ -2,10 +2,10 @@
 import { useRouter } from "next/navigation";
 import Cookies from "js-cookie";
 export default function page() {
-  const route = useRouter();
   const HandleAdminLogOut = () => {
+    const Route = useRouter();
     Cookies.remove("email");
-    route.push("/login");
+  Route.push("/login");
   };
   return (
     <>
