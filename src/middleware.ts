@@ -16,7 +16,7 @@ export function middleware(req: NextRequest) {
   }
 
   const adminToken = req.cookies.get("email");
-  const userToken = req.cookies.get("authjs.session-token");
+  const userToken = req.cookies.get("__Secure-authjs.session-token");
 
   if (!adminToken && !userToken) {
       console.log("No tokens found. Redirecting to login.");
