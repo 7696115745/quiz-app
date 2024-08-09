@@ -7,7 +7,7 @@ export function middleware(req: NextRequest) {
   // Extract tokens from cookies
   const AdminToken = cookies.get("email");
   const UserToken = cookies.get("authjs.session-token");
- 
+
   console.log("Admin Token:", AdminToken);
   console.log("Session Token:", UserToken);
 
@@ -23,25 +23,21 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // If `admintoken` is present, allow access to `/admin` and other routes
+  // If AdminToken is present, allow access to `/admin` and other routes
   if (AdminToken) {
-    if (pathname === '/admin'||pathname==='/adminsetQuestions'||pathname==="user"||pathname==="/") {
+    if (pathname === '/admin' || pathname === '/adminsetQuestions' || pathname === '/user' || pathname === '/') {
       return NextResponse.next();
     }
-    if (pathname !== '/' && pathname !== '/login') {
-      return NextResponse.next();
-    }
+    // Redirect to home if trying to access other routes
     return NextResponse.redirect(new URL("/", req.url));
   }
 
-  // If `AdminToken` is present, allow access to the home page and other routes
+  // If UserToken is present, allow access to the home page and other routes
   if (UserToken) {
-    if (pathname === '/') {
+    if (pathname === '/' || pathname === '/login') {
       return NextResponse.next();
     }
-    if (pathname !== '/login') {
-      return NextResponse.next();
-    }
+    // Redirect to home if trying to access other routes
     return NextResponse.redirect(new URL("/", req.url));
   }
 
