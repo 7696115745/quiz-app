@@ -28,7 +28,6 @@ export function middleware(req: NextRequest) {
     if (pathname === '/admin' || pathname === '/adminsetQuestions' || pathname === '/user' || pathname === '/') {
       return NextResponse.next();
     }
-    // Redirect to home if trying to access other routes
     return NextResponse.redirect(new URL("/", req.url));
   }
 
@@ -37,7 +36,6 @@ export function middleware(req: NextRequest) {
     if (pathname === '/' || pathname === '/login') {
       return NextResponse.next();
     }
-    // Redirect to home if trying to access other routes
     return NextResponse.redirect(new URL("/", req.url));
   }
 
