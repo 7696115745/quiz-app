@@ -3,19 +3,21 @@ import { NextRequest, NextResponse } from "next/server";
 export function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
 
-  // Skip middleware for static files, Next.js internal paths, and the login page
-  if (
-    pathname.startsWith('/_next/') ||
-    pathname.startsWith('/static/') ||
-    pathname.startsWith('/public/') ||
-    pathname.match(/\.(png|jpg|jpeg|gif|svg|ico)$/) ||
-    pathname === '/login' || // Allow access to the login page
-    pathname.startsWith('/api/auth/') // Allow access to API routes
-  ) {
+  // Allow requests for static assets to pass through
+  if (pathname.startsWith('/_next/') || pathname.startsWith('/static/')) {
     return NextResponse.next();
   }
 
-  // Extract tokens from cookies
+  // Allow all requests to /api/auth/* to pass through
+  if (pathname.startsWith('/api/auth/')) {
+    return NextResponse.next();
+  }
+
+  // Skip middleware for the login page
+  if (pathname === '/login') {
+    return NextResponse.next();
+  }
+
   const adminToken = req.cookies.get("email");
   const userToken = req.cookies.get("authjs.session-token");
 
