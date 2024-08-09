@@ -1,15 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
 export function middleware(req: NextRequest) {
-  const { pathname } = req.nextUrl;
   const cookies = req.cookies;
-
-  // Extract tokens from cookies
-  const AdminToken = cookies.get("email");
-  const UserToken = cookies.get("authjs.session-token");
-
-  console.log("Admin Token:", AdminToken);
-  console.log("Session Token:", UserToken);
+  const { pathname } = req.nextUrl;
 
   // Skip middleware for static files, Next.js internal paths, and the login page
   if (
@@ -23,27 +16,16 @@ export function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  // If AdminToken is present, allow access to `/admin` and other routes
-  if (AdminToken) {
-    if (pathname === '/admin' || pathname === '/adminsetQuestions' || pathname === '/user' || pathname === '/') {
-      return NextResponse.next();
-    }
-    return NextResponse.redirect(new URL("/", req.url));
-  }
+  // Extract tokens from cookies
+  const AdminToken = cookies.get("email");
+  const UserToken = cookies.get("authjs.session-token");
 
-  // If UserToken is present, allow access to the home page and other routes
-  if (UserToken) {
-    if (pathname === '/' || pathname === '/login') {
-      return NextResponse.next();
-    }
-    return NextResponse.redirect(new URL("/", req.url));
-  }
-
-  // Redirect to login page if no valid token is found and the user is not on the login page
-  if (!AdminToken && !UserToken && pathname !== '/login') {
+  // Check if any cookies are present
+  if (!AdminToken && !UserToken) {
+    // Redirect to login page if no cookies are found
     return NextResponse.redirect(new URL("/login", req.url));
   }
 
-  // Allow the request if none of the conditions are met
+  // Allow the request if cookies are present
   return NextResponse.next();
 }
